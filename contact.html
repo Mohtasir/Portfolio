@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Mohtasir Ibn Matiur | Contact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #141414;
+            --green: #00ff88;
+            --green-dim: #00cc6a;
+            --green-glow: rgba(0,255,136,0.12);
+            --green-border: rgba(0,255,136,0.25);
+            --cyan: #00e5ff;
+            --text-primary: #f0f0f0;
+            --text-secondary: #888;
+            --text-muted: #555;
+            --border: #1e1e1e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.06;
+        }
+        .blob1 { width: 400px; height: 400px; background: var(--green); top: -100px; right: -100px; }
+        .blob2 { width: 300px; height: 300px; background: var(--cyan); bottom: 100px; left: -80px; }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10,10,10,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+        }
+        .logo span { color: var(--green); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto 4rem;
+            padding: 0 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+        }
+        .section-badge {
+            display: inline-block;
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+        .page-header h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+        }
+        .page-header h1 span { color: var(--green); }
+        .page-header p {
+            color: var(--text-primary);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            border-radius: 1.2rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.25s;
+            flex: 1;
+            min-width: 280px;
+        }
+        .contact-card:hover {
+            border-color: var(--green-border);
+            box-shadow: 0 0 30px var(--green-glow);
+            transform: translateY(-3px);
+        }
+
+        .card-header {
+            background: #0f0f0f;
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-header h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+        }
+        .card-header h2 i { color: var(--green); }
+
+        .contact-details { padding: 1.5rem 1.8rem; }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .contact-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .contact-info h4 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .contact-info p, .contact-info a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .contact-info a:hover { color: var(--green); }
+
+        .form-card {
+            background: var(--bg-card);
+            border-radius: 1.2rem;
+            border: 1px solid var(--border);
+            flex: 1.2;
+            min-width: 300px;
+            overflow: hidden;
+            transition: all 0.25s;
+        }
+        .form-card:hover {
+            border-color: var(--green-border);
+            box-shadow: 0 0 30px var(--green-glow);
+        }
+        .form-header {
+            background: #0f0f0f;
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .form-header h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+        }
+        .form-header h2 i { color: var(--green); }
+
+        .contact-form { padding: 1.8rem; }
+        .input-group { margin-bottom: 1rem; }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            background: #0f0f0f;
+            color: var(--text-primary);
+            transition: 0.2s;
+        }
+        .input-group input::placeholder, .input-group textarea::placeholder { color: rgba(0,255,136,0.5); }
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--green-border);
+            box-shadow: 0 0 0 3px var(--green-glow);
+        }
+        .input-group textarea { resize: vertical; min-height: 110px; }
+
+        .submit-btn {
+            background: var(--green);
+            color: #0a0a0a;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            letter-spacing: 0.5px;
+        }
+        .submit-btn:hover:not(:disabled) {
+            background: var(--green-dim);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--green-glow);
+        }
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transform: translateY(120px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 340px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast.success {
+            background: #0d2b1a;
+            border: 1px solid var(--green-border);
+            color: var(--green);
+        }
+        .toast.error {
+            background: #2b0d0d;
+            border: 1px solid rgba(255,80,80,0.35);
+            color: #ff6b6b;
+        }
+        .toast i { font-size: 1.1rem; }
+
+        /* Setup guide banner */
+        .setup-banner {
+            background: #1a1400;
+            border: 1px solid rgba(255, 200, 0, 0.3);
+            border-radius: 1rem;
+            padding: 1.2rem 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .setup-banner i { color: #ffc800; font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+        .setup-banner h4 { color: #ffc800; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .setup-banner p { color: #a08a30; font-size: 0.85rem; line-height: 1.6; }
+        .setup-banner code {
+            background: rgba(255,200,0,0.1);
+            border: 1px solid rgba(255,200,0,0.2);
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.82rem;
+            color: #ffd740;
+        }
+        .setup-banner ol { margin: 0.5rem 0 0 1.2rem; }
+        .setup-banner ol li { color: #a08a30; font-size: 0.84rem; margin-bottom: 0.3rem; }
+
+        @media (max-width: 750px) {
+            .navbar { flex-direction: column; text-align: center; }
+            .nav-links { justify-content: center; }
+            .contact-grid { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-blob blob1"></div>
+    <div class="glow-blob blob2"></div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i id="toast-icon"></i>
+        <span id="toast-msg"></span>
+    </div>
+
+    <nav>
+        <div class="navbar">
+            <div class="logo">Mohtasir Ibn Matiur</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTACT -->
+    <div class="container">
+
+        <div class="page-header">
+            <span class="section-badge"><i class="fas fa-comment-dots"></i> &nbsp;Get In Touch</span>
+            <h1>MY <span>CONTACT</span></h1>
+            <p>Let's collaborate on AI, data science, or app development — reach out anytime</p>
+        </div>
+
+        <!-- SETUP GUIDE -->
+        <div class="setup-banner" id="setupBanner">
+            <i class="fas fa-triangle-exclamation"></i>
+            <div>
+                <h4>⚙️ One-time Setup Required (5 minutes)</h4>
+                <p>To activate the contact form, you need a free <strong>EmailJS</strong> account. Follow these steps:</p>
+                <ol>
+                    <li>Go to <strong>emailjs.com</strong> → Sign up free → Add Gmail service → copy your <code>Service ID</code></li>
+                    <li>Create an Email Template with variables: <code>{{from_name}}</code>, <code>{{from_email}}</code>, <code>{{subject}}</code>, <code>{{message}}</code> → copy your <code>Template ID</code></li>
+                    <li>Go to Account → copy your <code>Public Key</code></li>
+                    <li>In this file, replace the 3 placeholder values in the <code>&lt;script&gt;</code> section at the bottom: <code>YOUR_PUBLIC_KEY</code>, <code>YOUR_SERVICE_ID</code>, <code>YOUR_TEMPLATE_ID</code></li>
+                    <li>Done! The form will send emails directly to <strong>mohtasiribnmatiur1@gmail.com</strong></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="contact-grid">
+            <!-- Contact Details -->
+            <div class="contact-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-address-card"></i> Reach Me Directly</h2>
+                </div>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-info">
+                            <h4>Email</h4>
+                            <a href="mailto:mohtasiribnmatiur1@gmail.com">mohtasiribnmatiur1@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="contact-info">
+                            <h4>Phone / WhatsApp</h4>
+                            <p>+880 1644455447</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
+                        <div class="contact-info">
+                            <h4>LinkedIn</h4>
+                            <a href="https://www.linkedin.com/in/mohtasir-ibn-matiur-498254365/" target="_blank">Click here</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fab fa-github"></i></div>
+                        <div class="contact-info">
+                            <h4>GitHub</h4>
+                            <a href="https://github.com/Mohtasir" target="_blank">Click here</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-info">
+                            <h4>Location</h4>
+                            <p>Daffodil Smart City, Savar, Dhaka, Bangladesh</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="form-card">
+                <div class="form-header">
+                    <h2><i class="fas fa-paper-plane"></i> Send a Message</h2>
+                </div>
+                <div class="contact-form">
+                    <div class="input-group">
+                        <input type="text" id="from_name" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="from_email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="subject" placeholder="Subject (e.g., Collaboration / Project)">
+                    </div>
+                    <div class="input-group">
+                        <textarea id="message" placeholder="Tell me about your idea, research, or development needs..."></textarea>
+                    </div>
+                    <button type="button" class="submit-btn" id="sendBtn" onclick="sendEmail()">
+                        <i class="fas fa-location-arrow"></i>
+                        <span id="btnText">Send Message</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════
+        //  EMAILJS CONFIGURATION
+        //  Replace the 3 values below with your EmailJS credentials
+        //  Sign up free at: https://www.emailjs.com
+        // ═══════════════════════════════════════════════════════════
+        const EMAILJS_PUBLIC_KEY  = '8VQKd91X-ChgbSS8i';
+        const EMAILJS_SERVICE_ID  = 'service_4ptm7go';
+        const EMAILJS_TEMPLATE_ID = 'template_b55npqn';
+        // ═══════════════════════════════════════════════════════════
+
+        // Init EmailJS
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+
+        // Hide setup banner once configured
+        if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+            document.getElementById('setupBanner').style.display = 'none';
+        }
+
+        function showToast(type, message) {
+            const toast = document.getElementById('toast');
+            const icon  = document.getElementById('toast-icon');
+            const msg   = document.getElementById('toast-msg');
+
+            toast.className = 'toast ' + type;
+            icon.className  = type === 'success' ? 'fas fa-circle-check' : 'fas fa-circle-xmark';
+            msg.textContent = message;
+
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 5000);
+        }
+
+        function sendEmail() {
+            // Check config
+            if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+                showToast('error', 'Please complete the EmailJS setup first. See the yellow guide above.');
+                return;
+            }
+
+            const name    = document.getElementById('from_name').value.trim();
+            const email   = document.getElementById('from_email').value.trim();
+            const subject = document.getElementById('subject').value.trim() || 'No Subject';
+            const message = document.getElementById('message').value.trim();
+
+            // Validation
+            if (!name) { showToast('error', 'Please enter your full name.'); return; }
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('error', 'Please enter a valid email address.'); return;
+            }
+            if (!message) { showToast('error', 'Please write a message before sending.'); return; }
+
+            // Loading state
+            const btn     = document.getElementById('sendBtn');
+            const btnText = document.getElementById('btnText');
+            btn.disabled  = true;
+            btnText.textContent = 'Sending...';
+            btn.querySelector('i').className = 'fas fa-spinner fa-spin';
+
+            // Send via EmailJS
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                from_name:  name,
+                from_email: email,
+                subject:    subject,
+                message:    message
+            })
+            .then(() => {
+                showToast('success', 'Message sent! Mohtasir will reply within 24 hours.');
+                document.getElementById('from_name').value  = '';
+                document.getElementById('from_email').value = '';
+                document.getElementById('subject').value    = '';
+                document.getElementById('message').value    = '';
+            })
+            .catch((err) => {
+                console.error('EmailJS error:', err);
+                const detail = err && err.text ? err.text : (err.status ? 'Status ' + err.status : 'Unknown error');
+                showToast('error', 'Send failed: ' + detail);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btnText.textContent = 'Send Message';
+                btn.querySelector('i').className = 'fas fa-location-arrow';
+            });
+        }
+
+        // Allow Enter key in inputs (not textarea) to submit
+        document.querySelectorAll('.contact-form input').forEach(input => {
+            input.addEventListener('keydown', e => {
+                if (e.key === 'Enter') sendEmail();
+            });
+        });
+    </script>
+    <script src="admin.js"></script>
+</body>
+</html>

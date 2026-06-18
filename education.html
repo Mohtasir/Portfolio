@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Mohtasir Ibn Matiur | Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #141414;
+            --bg-card-hover: #1a1a1a;
+            --green: #00ff88;
+            --green-dim: #00cc6a;
+            --green-glow: rgba(0,255,136,0.12);
+            --green-border: rgba(0,255,136,0.25);
+            --cyan: #00e5ff;
+            --text-primary: #f0f0f0;
+            --text-secondary: #888;
+            --text-muted: #555;
+            --border: #1e1e1e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.06;
+        }
+        .blob1 { width: 400px; height: 400px; background: var(--green); top: -100px; right: -100px; }
+        .blob2 { width: 300px; height: 300px; background: var(--cyan); bottom: 100px; left: -80px; }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10,10,10,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+        }
+        .logo span { color: var(--green); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+        }
+        .section-badge {
+            display: inline-block;
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+        .page-header h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+        }
+        .page-header h1 span { color: var(--green); }
+        .page-header p {
+            color: var(--text-primary);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .section-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .section-title i { color: var(--green); }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--green-border), transparent);
+        }
+
+        .education-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .edu-card {
+            background: var(--bg-card);
+            border-radius: 1.2rem;
+            padding: 1.8rem 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.25s;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .edu-card:hover {
+            border-color: var(--green-border);
+            box-shadow: 0 0 28px var(--green-glow);
+        }
+        .edu-info { flex: 2; }
+        .edu-degree {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+            margin-bottom: 0.4rem;
+        }
+        .institution {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--green-dim);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .institution i { color: var(--green); }
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+        }
+        .details span {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            padding: 0.25rem 0.9rem;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-secondary);
+        }
+        .details span i { color: var(--green); }
+        .badge-gpa {
+            border-color: var(--green-border) !important;
+            color: var(--green) !important;
+            background: var(--green-glow) !important;
+            font-weight: 600;
+        }
+        .ongoing {
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            color: var(--green);
+            border-radius: 4px;
+            padding: 0.15rem 0.7rem;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-left: 0.8rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .uni-description {
+            margin-top: 1rem;
+            font-size: 0.88rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: #0f0f0f;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid var(--green);
+        }
+        .uni-description strong {
+            color: var(--green);
+        }
+        .uni-rank {
+            display: inline-block;
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            color: var(--green);
+            padding: 0.2rem 0.9rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.6rem;
+        }
+        .diu-campus {
+            margin-top: 0.5rem;
+            font-style: italic;
+            font-size: 0.82rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .diu-campus i { color: var(--green); }
+        .edu-icon { font-size: 2rem; color: var(--green); opacity: 0.7; }
+
+        .interest-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .interest-card {
+            background: var(--bg-card);
+            flex: 1;
+            min-width: 240px;
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: 0.2s;
+        }
+        .interest-card:hover {
+            border-color: var(--green-border);
+            box-shadow: 0 0 24px var(--green-glow);
+        }
+        .interest-card h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--green);
+            letter-spacing: 0.5px;
+            border-left: 3px solid var(--green);
+            padding-left: 0.8rem;
+        }
+        .interest-card h3 i { color: var(--green); }
+        .interest-item {
+            margin-bottom: 0.9rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.8rem;
+            font-size: 0.88rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+        .interest-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .interest-item i { color: var(--green); margin-right: 6px; }
+        .interest-item strong { color: var(--green); }
+
+        @media (max-width: 800px) {
+            .navbar { justify-content: center; flex-direction: column; }
+            .nav-links { justify-content: center; }
+            .edu-card { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-blob blob1"></div>
+    <div class="glow-blob blob2"></div>
+
+    <nav>
+        <div class="navbar">
+            <div class="logo">Mohtasir Ibn Matiur</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="education.html" class="active">Education</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <!-- Page Header - Similar to Skills page -->
+        <div class="page-header">
+            <span class="section-badge"><i class="fas fa-graduation-cap"></i> &nbsp;Academic Journey</span>
+            <h1>MY <span>EDUCATION</span></h1>
+            <p>Schools, colleges & university — the path of learning</p>
+        </div>
+
+        <div id="education">
+            <div class="education-grid">
+
+                <div class="edu-card">
+                    <div class="edu-info">
+                        <div class="edu-degree">Secondary School Certificate (SSC)</div>
+                        <div class="institution"><i class="fas fa-school"></i> Savar Cantonment Board Boys High School</div>
+                        <div class="details">
+                            <span class="badge-gpa"><i class="fas fa-star"></i> GPA: 4.89</span>
+                            <span><i class="far fa-calendar-alt"></i> Passing Year: 2020</span>
+                            <span><i class="fas fa-trophy"></i> Board: Dhaka</span>
+                        </div>
+                    </div>
+                    <div class="edu-icon"><i class="fas fa-scroll"></i></div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-info">
+                        <div class="edu-degree">Higher School Certificate (HSC)</div>
+                        <div class="institution"><i class="fas fa-university"></i> Savar Model College</div>
+                        <div class="details">
+                            <span class="badge-gpa"><i class="fas fa-star"></i> GPA: 5.00</span>
+                            <span><i class="far fa-calendar-alt"></i> Passing Year: 2022</span>
+                            <span><i class="fas fa-chart-line"></i> Science Group</span>
+                        </div>
+                    </div>
+                    <div class="edu-icon"><i class="fas fa-award"></i></div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-info">
+                        <div class="edu-degree">
+                            BSc. Computer Science & Engineering
+                            <span class="ongoing"><i class="fas fa-hourglass-half"></i> Ongoing</span>
+                        </div>
+                        <div class="institution"><i class="fas fa-building-columns"></i> Daffodil International University (DIU)</div>
+                        <div class="details">
+                            <span><i class="fas fa-map-marker-alt"></i> Daffodil Smart City, Birulia, Savar, Dhaka</span>
+                            <span><i class="fas fa-calendar"></i> 2023 – Present</span>
+                        </div>
+                        <div class="uni-description">
+                            <strong>🏛️ About DIU:</strong> Daffodil International University is a private research university located in Daffodil Smart City, Birulia, Savar, Dhaka, Bangladesh. Established on 24 January 2002 under the Private University Act of 1992 — the largest private university in Bangladesh by area.<br>
+                            <span class="uni-rank"><i class="fas fa-chart-simple"></i> Ranked 1st among public & private universities in Bangladesh — THE Impact Rankings 2024</span>
+                            <div class="diu-campus"><i class="fas fa-tree"></i> DIU Campus – vibrant research & innovation hub</div>
+                        </div>
+                    </div>
+                    <div class="edu-icon"><i class="fas fa-laptop-code"></i></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Personal Interest Section -->
+        <div class="interest-grid">
+            <div class="interest-card">
+                <h3><i class="fas fa-heart"></i> Personal Interest</h3>
+                <div class="interest-item"><i class="fas fa-chess-knight"></i> <strong>Playing Chess</strong> – Passionate about strategy and competitive play</div>
+                <div class="interest-item"><i class="fas fa-landmark"></i> <strong>Studying History</strong> – Exploring civilizations, wars, and world events</div>
+                <div class="interest-item"><i class="fas fa-book-open"></i> <strong>Reading Books</strong> – Fiction, non-fiction, and self-development</div>
+                <div class="interest-item"><i class="fas fa-headphones"></i> <strong>Audiobooks & Podcasts</strong> – Learning on the go through audio content</div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>

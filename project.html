@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Mohtasir Ibn Matiur | Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #141414;
+            --green: #00ff88;
+            --green-dim: #00cc6a;
+            --green-glow: rgba(0,255,136,0.12);
+            --green-border: rgba(0,255,136,0.25);
+            --cyan: #00e5ff;
+            --text-primary: #f0f0f0;
+            --text-secondary: #888;
+            --text-muted: #555;
+            --border: #1e1e1e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.06;
+        }
+        .blob1 { width: 400px; height: 400px; background: var(--green); top: -100px; right: -100px; }
+        .blob2 { width: 300px; height: 300px; background: var(--cyan); bottom: 100px; left: -80px; }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10,10,10,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+        }
+        .logo span { color: var(--green); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto 4rem;
+            padding: 0 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+        }
+        .section-badge {
+            display: inline-block;
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+        .page-header h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+        }
+        .page-header h1 span { color: var(--green); }
+        .page-header p {
+            color: var(--text-primary);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .section-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title i { color: var(--green); }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--green-border), transparent);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 1.2rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.25s;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover {
+            border-color: var(--green-border);
+            box-shadow: 0 0 28px var(--green-glow);
+            transform: translateY(-4px);
+        }
+        .card-top {
+            background: #0f0f0f;
+            padding: 1.5rem 1.5rem 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .project-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .project-status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.2rem 0.7rem;
+            border-radius: 4px;
+        }
+        .status-complete {
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            color: var(--green);
+        }
+        .status-ongoing {
+            background: rgba(0,229,255,0.1);
+            border: 1px solid rgba(0,229,255,0.25);
+            color: var(--cyan);
+        }
+        .card-body { padding: 1.2rem 1.5rem; flex: 1; }
+        .card-body h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        .card-body p {
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        .card-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .card-tag {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border: 1px solid #2a2a2a;
+            padding: 0.2rem 0.7rem;
+            border-radius: 4px;
+        }
+
+        .ongoing-strip {
+            background: rgba(0,229,255,0.04);
+            border: 1px solid rgba(0,229,255,0.15);
+            border-radius: 1rem;
+            padding: 1.2rem 1.8rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .ongoing-strip i { color: var(--cyan); font-size: 1.2rem; }
+        .ongoing-strip p { color: var(--text-primary); font-size: 0.88rem; line-height: 1.6; }
+        .ongoing-strip strong { color: var(--cyan); }
+
+        .coming-soon-card {
+            background: var(--bg-card);
+            border-radius: 1.2rem;
+            border: 1px dashed #2a2a2a;
+            padding: 2rem;
+            text-align: center;
+            transition: 0.25s;
+        }
+        .coming-soon-card:hover {
+            border-color: var(--green-border);
+            box-shadow: 0 0 28px var(--green-glow);
+        }
+        .coming-soon-card .cs-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--green);
+            margin: 0 auto 1rem;
+        }
+        .coming-soon-card h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        .coming-soon-card p {
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 750px) {
+            .navbar { flex-direction: column; text-align: center; }
+            .nav-links { justify-content: center; }
+            .page-header h1 { font-size: 2rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-blob blob1"></div>
+    <div class="glow-blob blob2"></div>
+
+    <nav>
+        <div class="navbar">
+            <div class="logo">Mohtasir Ibn Matiur</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="project.html" class="active">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div class="page-header">
+            <span class="section-badge"><i class="fas fa-folder-open"></i> &nbsp;My Work</span>
+            <h1>MY <span>PROJECTS</span></h1>
+            <p>A collection of projects built with C, Java, SQL, Python & Flutter</p>
+        </div>
+
+        <div class="section-title"><i class="fas fa-check-circle"></i> Completed Projects</div>
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <div class="card-top">
+                    <div class="project-icon"><i class="fas fa-calculator"></i></div>
+                    <span class="project-status status-complete">Completed</span>
+                </div>
+                <div class="card-body">
+                    <h3>Basic Calculator</h3>
+                    <p>A console-based calculator built in C programming. Supports all arithmetic operations — addition, subtraction, multiplication, division — with input validation, error handling for division by zero, and a looped menu interface for continuous use.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="card-tag">C Programming</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-top">
+                    <div class="project-icon"><i class="fas fa-globe"></i></div>
+                    <span class="project-status status-complete">Completed</span>
+                </div>
+                <div class="card-body">
+                    <h3>Personal Portfolio Website</h3>
+                    <p>This very website — a fully custom-designed dark-themed personal portfolio showcasing skills, projects, education, and a working contact form. Built with pure HTML, CSS and JavaScript with a modern terminal-inspired aesthetic.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="card-tag">Web / System</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-top">
+                    <div class="project-icon"><i class="fas fa-database"></i></div>
+                    <span class="project-status status-complete">Completed</span>
+                </div>
+                <div class="card-body">
+                    <h3>E-Learning Database</h3>
+                    <p>A fully normalized relational database design for an e-learning platform. Covers student enrollment, course management, instructor assignments, quiz results, and progress tracking — designed up to 3NF with optimized SQL queries and complex joins.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="card-tag">Database</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-top">
+                    <div class="project-icon"><i class="fas fa-road"></i></div>
+                    <span class="project-status status-complete">Completed</span>
+                </div>
+                <div class="card-body">
+                    <h3>Toll Management System</h3>
+                    <p>A C programming project implementing a full toll booth management system using core data structures — linked lists, queues, and stacks. Handles vehicle entry/exit, toll calculation, transaction history tracking, and generates summary reports.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="card-tag">C / Data Structures</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="section-title"><i class="fas fa-spinner"></i> Ongoing Projects</div>
+
+        <div class="ongoing-strip">
+            <i class="fas fa-circle-info"></i>
+            <p>These projects are currently <strong>under active development</strong> using Python, Flutter, and AI/ML frameworks. Stay tuned — they'll be live soon!</p>
+        </div>
+
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <div class="card-top">
+                    <div class="project-icon"><i class="fab fa-python"></i></div>
+                    <span class="project-status status-ongoing">Ongoing</span>
+                </div>
+                <div class="card-body">
+                    <h3>ML Project (Python)</h3>
+                    <p>An advanced machine learning project using Python — applying supervised learning models for real-world prediction and classification tasks. Involves data preprocessing, model training, evaluation, and deployment.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="card-tag" style="color:var(--cyan); border-color:rgba(0,229,255,0.25);">Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-top">
+                    <div class="project-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <span class="project-status status-ongoing">Ongoing</span>
+                </div>
+                <div class="card-body">
+                    <h3>Flutter Mobile App</h3>
+                    <p>A cross-platform mobile application built with Flutter and Dart — targeting both Android and iOS. Focuses on clean UI design, Firebase integration, and real-time data handling.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="card-tag" style="color:var(--cyan); border-color:rgba(0,229,255,0.25);">Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="coming-soon-card">
+                <div class="cs-icon"><i class="fas fa-code"></i></div>
+                <h3>More Projects Coming Soon</h3>
+                <p>Advanced AI, Data Science, and App Development projects are currently in progress. Check back soon or follow on GitHub for updates.</p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>
